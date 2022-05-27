@@ -78,42 +78,6 @@ class Oscilloscope:
         plt.show()
 
 
-
-
-# def data_update(i, ax, x, y, signal, fs, size, amp, ln):
-#     y.append(next(signal))
-#     x.append(i*(1/fs))
-
-#     ax.set_xlim(x[-size], x[-1]) if len(y)>size else plt.xlim(0, size*1/fs)
-#     ax.set_ylim(-amp*1.1, amp*1.1)
-
-#     ln.set_data(x[-size:], y[-size:])
-#     return ln,
-
-
-# def main():
-#     fs = 100
-#     x = 256*[]
-#     y = 256*[]
-#     freq = 10
-#     amp = 1
-#     sin = iter(SineOscillator(freq, amp=amp, sample_rate=fs))
-#     size = 255
-
-
-
-#     fig = plt.figure()
-#     ax = fig.add_subplot(1,1,1)
-#     ax.set_aspect('equal')
-#     ln, = ax.plot([], [])
-
-#     ax.set_title(f'Sine,\tf={freq},\tA={amp},\t$f_s$={fs}')
-#     ax.set_ylabel('sin(t)')
-#     ax.set_xlabel('t[s]')
-
-#     ani = FuncAnimation(fig, data_update, fargs=(ax, x, y, sin, fs, size, amp, ln), interval=1000/fs, blit=True)
-#     plt.show()
-
 def generate_signal(signal, f, fs):
     while True:
         Data.I+=1
