@@ -28,20 +28,21 @@ class Appearance:
 
 @dataclass
 class Global_data:
-    fs = 1000
+    fs = 10000
     update = 1
 
 
 @dataclass
 class Config:
-    freq = 5
-    amp = 1
+    freq = [5,0,0]
+    amp = [1,0,0]
+    phase = [0,0,0]
 
     filter_type = 0
     cutoff = 10
     order = 24
 
-    length = int(1/freq*Global_data.fs*3)
+    length = int(1/freq[0]*Global_data.fs*3)
     timebase = 0.001
     
 @dataclass
@@ -55,16 +56,17 @@ class Data:
 
 @dataclass
 class Generators:
-    signals = []
+    signals = [None, None, None]
     filters = []
     filters_zi = []
     filters_freqz = []
+    active_iterations = 0
 
 
 class Oscilloscope():
 
     def __init__(self, ylow=None, yhigh=None):
-        self.freq = Generators.signals[0].freq
+        self.freq = Config.freq[0]
         self.fs = Global_data.fs
 
         self.x = []
@@ -158,7 +160,7 @@ class Oscilloscope():
                 self.lnf_filt.set_data(w/2/3.14*self.fs, 20*np.log10(abs(h)))
                 self.axf.set_ylim(min(-max(yf_scale)+yf_scale), max(20 * np.log10(abs(h))[:len(w)])) if min(-max(yf_scale)+yf_scale)>=-100 else self.axf.set_ylim(-100, max(20 * np.log10(abs(h))[:len(w)]))
             else:
-                self.lnf_filt.set_data(xf, len(xf)*[self.yhigh])
+                self.lnf_filt.set_data(xf, len(xf)*[0])
                 self.axf.set_ylim(min(-max(yf_scale)+yf_scale), 0)
 
             self.axf.set_xlim(0, self.fs/2)
@@ -172,6 +174,7 @@ class Oscilloscope():
 
     def change_timebase(self):
         self.ani.event_source.interval = self.timebase*1000
+        self.fig.canvas.draw()
 
 
 def generate_signal():
@@ -181,7 +184,7 @@ def generate_signal():
 
         with Data.LOCK:
             Data.I+=1
-            Data.Ytf.append(next(Generators.signals[0]))
+            Data.Ytf.append(sum([next(Generators.signals[i]) if Generators.signals[i] else 0 for i in range(len(Generators.signals))])/len(Generators.signals))
             Data.X.append(Data.I*1/Global_data.fs)
             filter_signal()
 
@@ -197,8 +200,9 @@ def generate_signal():
 def filter_signal():
     delay = Global_data.fs//2*10
     if len(Generators.filters) > 0:
-        if len(Data.Ytf) <= delay:
-            Data.Y = (list(sosfilt(Generators.filters[0], Data.Ytf, zi=Generators.filters_zi[0]*Data.Ytf[0]))[0])
+        if Generators.active_iterations < delay:
+            Data.Y = (list(sosfilt(Generators.filters[0], Data.Ytf, zi=Generators.filters_zi[0]*Data.Ytf[-Generators.active_iterations]))[0])
+            Generators.active_iterations+=1
         else:
             Data.Y[-delay:] = (list(sosfilt(Generators.filters[0], Data.Ytf[-delay:], zi=Generators.filters_zi[0]*Data.Ytf[-delay]))[0])
     
@@ -209,15 +213,23 @@ def filter_signal():
             Data.Y[-delay:] = Data.Ytf[-delay:]        
 
 
-def freq_dial_handler(value):
-    Generators.signals[0].freq = Config.freq = value/10
-    print(f'Frequency value changed {Generators.signals[0].freq}')
+def freq_dial_handler(value, ind):
+    Config.freq[ind] = value/10
+    if Generators.signals[ind]:
+        Generators.signals[ind].freq = value/10
+        print(f'Frequency value changed {Generators.signals[ind].freq} for OSC{ind+1}')
 
-def amp_dial_handler(value, scope):
-    Generators.signals[0].amp = Config.amp = value/10
-    scope.ylow = -1.1*value/10
-    scope.yhigh = 1.1*value/10
-    print(f'Amplitude value changed {Generators.signals[0].amp}')
+def amp_dial_handler(value, ind):
+    Config.amp[ind] = value/10
+    if Generators.signals[ind]:
+        Generators.signals[ind].amp = value/10
+        print(f'Amplitude value changed {Generators.signals[ind].amp} for OSC{ind+1}')
+
+def phase_dial_handler(value, ind):
+    Config.phase[ind] = value
+    if Generators.signals[ind]:
+        Generators.signals[ind].phase = value
+        print(f'Phase value changed {Generators.signals[ind].phase} for OSC{ind+1}')
 
 def timebase_dial_handler(value, scope):
     scope.timebase = value/100
@@ -225,7 +237,7 @@ def timebase_dial_handler(value, scope):
     print(f'Timebase value changed {scope.timebase}')
 
 def length_dial_handler(value, scope):
-    scope.size = int(value/10)
+    scope.size = int(value)
     print(f'Window length changed {scope.size}')
 
 def filter_dial_handler(cutoff, order, ftype):
@@ -233,55 +245,54 @@ def filter_dial_handler(cutoff, order, ftype):
         Generators.filters = []
         Generators.filters_freqz = []
         Generators.filters_zi = []
-    if not ftype=='none':
+        Generators.active_iterations = 0
+    if not ftype=='off':
         sos = butter(order, cutoff/10*2/Global_data.fs, output = 'sos', btype=ftype)
         w, h = sosfreqz(sos)
         with Data.LOCK:
             Generators.filters.append(sos)
             Generators.filters_freqz.append((w, h))
             Generators.filters_zi.append(sosfilt_zi(sos))
+            Generators.active_iterations = 1
 
         print(f'New {ftype} filter |cutoff: {cutoff/10} |order: {order}')
 
     else:
         print('Filter removed')
 
+def scale_dial_handler(value, scope):
+    scope.ylow = -1.1*value/10
+    scope.yhigh = 1.1*value/10
 
-def signal_change_handler(sig):
+
+def signal_change_handler(sig, ind):
     with Data.LOCK:
         if sig=='sine':
-            Generators.signals.append(SineOscillator(Config.freq, amp=Config.amp, sample_rate=Global_data.fs))
-        elif sig=='sawtooth':
-            Generators.signals.append(SawOscillator(Config.freq, amp=Config.amp, sample_rate=Global_data.fs))
+            Generators.signals[ind] = SineOscillator(Config.freq[ind], amp=Config.amp[ind], sample_rate=Global_data.fs)
+        elif sig=='saw':
+            Generators.signals[ind] = SawOscillator(Config.freq[ind], amp=Config.amp[ind], sample_rate=Global_data.fs)
         elif sig=='triangle':
-            Generators.signals.append(TriangleOscillator(Config.freq, amp=Config.amp, sample_rate=Global_data.fs))
+            Generators.signals[ind] = TriangleOscillator(Config.freq[ind], amp=Config.amp[ind], sample_rate=Global_data.fs)
         elif sig=='square':
-            Generators.signals.append(SquareOscillator(Config.freq, amp=Config.amp, sample_rate=Global_data.fs))
-        Generators.signals = Generators.signals[-1:]
+            Generators.signals[ind] = SquareOscillator(Config.freq[ind], amp=Config.amp[ind], sample_rate=Global_data.fs)
+        else:
+            Generators.signals[ind] = None
         
 
 
 def main():
-    Generators.signals.append(SawOscillator(Config.freq, amp=Config.amp, sample_rate=Global_data.fs))
-
-    order = 24
-    cutoff = 7
-    sos = butter(order, cutoff*2/Global_data.fs, output = 'sos', btype='lowpass')
-    w, h = sosfreqz(sos)
-    Generators.filters.append(sos)
-    Generators.filters_freqz.append((w, h))
-    Generators.filters_zi.append(sosfilt_zi(sos))
+    Generators.signals[0] = SawOscillator(Config.freq[0], amp=Config.amp[0], sample_rate=Global_data.fs)
 
     generation_thread = threading.Thread(target=generate_signal, args=(), daemon=True)
     generation_thread.start()
 
-    scope = Oscilloscope(ylow=-1.1*Config.amp, yhigh=1.1*Config.amp)
+    scope = Oscilloscope(ylow=-1.1*Config.amp[0], yhigh=1.1*Config.amp[0])
     scope.init_plotting()
 
     app = QtWidgets.QApplication(sys.argv)
     MainWindow = QtWidgets.QMainWindow()
     ui = Ui_MainWindow()
-    ui.setupUi(MainWindow, scope, [freq_dial_handler, amp_dial_handler, length_dial_handler, timebase_dial_handler, filter_dial_handler, signal_change_handler])
+    ui.setupUi(MainWindow, scope, [freq_dial_handler, amp_dial_handler, length_dial_handler, timebase_dial_handler, filter_dial_handler, signal_change_handler, phase_dial_handler, scale_dial_handler])
     MainWindow.setWindowTitle("Signal Generator")
     MainWindow.show()
     sys.exit(app.exec())
