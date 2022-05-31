@@ -228,27 +228,27 @@ class Ui_MainWindow(object):
         #filter choice
         self.filter1.currentTextChanged.connect(lambda: dial_handlers[4](self.cutoff1.value(), self.order1.value(), self.filter1.currentText().lower()))
         #freq knobs
-        fmin, fmax = 1, scope.fs*10/4
+        fmin, fmax = 10, scope.fs*100/4
         self.freq1.setMinimum(fmin)
         self.freq1.setMaximum(fmax)
-        self.freq1.valueChanged.connect(lambda: dial_handlers[0](self.freq1.value(), 0))
+        self.freq1.valueChanged.connect(lambda: dial_handlers[0](self.freq1.value()/100, 0))
         self.freq2.setMinimum(fmin)
         self.freq2.setMaximum(fmax)
-        self.freq2.valueChanged.connect(lambda: dial_handlers[0](self.freq2.value(), 1))
+        self.freq2.valueChanged.connect(lambda: dial_handlers[0](self.freq2.value()/100, 1))
         self.freq3.setMinimum(fmin)
         self.freq3.setMaximum(fmax)
-        self.freq3.valueChanged.connect(lambda: dial_handlers[0](self.freq3.value(), 2))
+        self.freq3.valueChanged.connect(lambda: dial_handlers[0](self.freq3.value()/100, 2))
         #amp knobs
         amin, amax = 1, 100
         self.amp1.setMinimum(amin)
         self.amp1.setMaximum(amax)
-        self.amp1.valueChanged.connect(lambda: dial_handlers[1](self.amp1.value(), 0))
+        self.amp1.valueChanged.connect(lambda: dial_handlers[1](self.amp1.value()/5, 0))
         self.amp2.setMinimum(amin)
         self.amp2.setMaximum(amax)
-        self.amp2.valueChanged.connect(lambda: dial_handlers[1](self.amp2.value(), 1))
+        self.amp2.valueChanged.connect(lambda: dial_handlers[1](self.amp2.value()/5, 1))
         self.amp3.setMinimum(amin)
         self.amp3.setMaximum(amax)
-        self.amp3.valueChanged.connect(lambda: dial_handlers[1](self.amp3.value(), 2))
+        self.amp3.valueChanged.connect(lambda: dial_handlers[1](self.amp3.value()/5, 2))
         #phase knobs
         pmin, pmax = 0, 180
         self.ph1.setMinimum(pmin)
@@ -267,17 +267,17 @@ class Ui_MainWindow(object):
         #order knob
         self.order1.setMinimum(1)
         self.order1.setMaximum(24)
-        self.order1.valueChanged.connect(lambda: dial_handlers[4](self.cutoff1.value(), self.order1.value(), self.filter1.currentText().lower()))
+        self.order1.valueChanged.connect(lambda: dial_handlers[4](self.cutoff1.value()/10, self.order1.value(), self.filter1.currentText().lower()))
         #oscillo knobs
         self.wlen.setMinimum(10)
         self.wlen.setMaximum(10000)
         self.wlen.valueChanged.connect(lambda: dial_handlers[2](self.wlen.value(), self.scope))
         self.timeb.setMinimum(1)
         self.timeb.setMaximum(100)
-        self.timeb.valueChanged.connect(lambda: dial_handlers[3](self.timeb.value(), self.scope))
+        self.timeb.valueChanged.connect(lambda: dial_handlers[3](self.timeb.value()/100, self.scope))
         self.scale.setMinimum(1)
         self.scale.setMaximum(100)
-        self.scale.valueChanged.connect(lambda: dial_handlers[7](self.timeb.value(), self.scope))
+        self.scale.valueChanged.connect(lambda: dial_handlers[7](self.scale.value()/10, self.scope))
 
         MainWindow.setCentralWidget(self.centralwidget)
 
@@ -339,19 +339,22 @@ class Ui_MainWindow(object):
         self.label_10.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-family:\'Proxy 9\'; font-size:16pt; font-weight:600; font-style:italic;\">OSC3</span></p></body></html>"))
         self.label_11.setText(_translate("MainWindow", "<html><head/><body><p align=\"center\"><span style=\" font:10pt Proxy 9; font-weight:600;\">FREQUENCY</span></p></body></html>"))
         self.label_12.setText(_translate("MainWindow", "<html><head/><body><p align=\"center\"><span style=\" font:10pt Proxy 9; font-weight:600;\">AMPLITUDE</span></p></body></html>"))
+        
         self.osc1.setCurrentText('SINE')
-        self.freq1.setValue(50)
-        self.amp1lcd.display(self.amp1.value()/10)
+        self.freq1.setValue(500)
         self.amp1.setValue(10)
+        self.amp1lcd.display(self.amp1.value()/10)
         self.freq1lcd.display(self.freq1.value()/100)
         self.wlen.setValue(600)
         self.wllcd.display(600)
-        self.timeb.setValue(5)
+        self.timeb.setValue(60)
         self.tblcd.display(self.timeb.value()/100)
         self.order1.setValue(12)
         self.ord1lcd.display(12)
         self.cutoff1.setValue(self.scope.fs/4)
         self.cut1lcd.display(self.cutoff1.value()/100)
+        self.scale.setValue(10)
+        self.sclcd.display(1)
 
 
 

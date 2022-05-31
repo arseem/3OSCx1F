@@ -8,7 +8,6 @@ from OSCILLATORS.Sine import SineOscillator
 from OSCILLATORS.Square import SquareOscillator
 from OSCILLATORS.Triangle import TriangleOscillator
 from OSCILLATORS.Saw import SawOscillator
-from OSCILLATORS.Oscillator import Oscillator
 import threading
 from time import sleep, perf_counter
 from scipy.fft import rfftfreq, rfft
@@ -28,7 +27,7 @@ class Appearance:
 
 @dataclass
 class Global_data:
-    fs = 10000
+    fs = 1000
     update = 1
 
 
@@ -42,8 +41,8 @@ class Config:
     cutoff = 10
     order = 24
 
-    length = int(1/freq[0]*Global_data.fs*3)
-    timebase = 0.001
+    length = 600    #int(1/freq[0]*Global_data.fs*3)
+    timebase = 0.6  #length/Global_data.fs
     
 @dataclass
 class Data:
@@ -68,12 +67,11 @@ class Oscilloscope():
     def __init__(self, ylow=None, yhigh=None):
         self.freq = Config.freq[0]
         self.fs = Global_data.fs
+        self.start = -1
 
         self.x = []
         self.y = []
         self.size = Config.length
-        self.ylow = ylow
-        self.yhigh = yhigh
         self.timebase = Config.timebase
         self.ylow = ylow
         self.yhigh = yhigh
@@ -122,9 +120,8 @@ class Oscilloscope():
 
 
     def _tick(self, i):
-        # while len(Data.Y)<self.size:
-        #     sleep(0.01)
-
+        if self.start==-1:
+            self.start = perf_counter()
         with Data.LOCK:
             #print('Reading Data')
             self.x = Data.X
@@ -164,21 +161,28 @@ class Oscilloscope():
                 self.axf.set_ylim(min(-max(yf_scale)+yf_scale), 0)
 
             self.axf.set_xlim(0, self.fs/2)
+
+        if perf_counter()-self.start >= self.timebase:
+            self.start=-1
+            return self.ln, self.lnf, fill, self.ln_pre, self.lnf_filt
         
-        return self.ln, self.lnf, fill, self.ln_pre, self.lnf_filt, 
+        else:
+            return self.lnf, self.lnf_filt, fill
 
 
     def init_plotting(self):
-        self.ani = FuncAnimation(self.fig, self._tick, interval=self.timebase*1000, blit=True)
+        #self.ani = FuncAnimation(self.fig, self._tick, interval=int(self.timebase*1000), blit=True)
+        self.ani = FuncAnimation(self.fig, self._tick, interval=0, blit=True)
         self.fig.show()
 
     def change_timebase(self):
-        self.ani.event_source.interval = self.timebase*1000
-        self.fig.canvas.draw()
+        pass
+        #self.ani.event_source.interval = int(Config.timebase*1000)
+        #self.fig.canvas.draw_idle()
 
 
 def generate_signal():
-    sleep(1)
+    sleep(3)
     while True:
         start = perf_counter()
 
@@ -214,15 +218,15 @@ def filter_signal():
 
 
 def freq_dial_handler(value, ind):
-    Config.freq[ind] = value/10
+    Config.freq[ind] = value
     if Generators.signals[ind]:
-        Generators.signals[ind].freq = value/10
+        Generators.signals[ind].freq = value
         print(f'Frequency value changed {Generators.signals[ind].freq} for OSC{ind+1}')
 
 def amp_dial_handler(value, ind):
-    Config.amp[ind] = value/10
+    Config.amp[ind] = value
     if Generators.signals[ind]:
-        Generators.signals[ind].amp = value/10
+        Generators.signals[ind].amp = value
         print(f'Amplitude value changed {Generators.signals[ind].amp} for OSC{ind+1}')
 
 def phase_dial_handler(value, ind):
@@ -232,9 +236,10 @@ def phase_dial_handler(value, ind):
         print(f'Phase value changed {Generators.signals[ind].phase} for OSC{ind+1}')
 
 def timebase_dial_handler(value, scope):
-    scope.timebase = value/100
+    Config.timebase = value
+    scope.timebase = value
     scope.change_timebase()
-    print(f'Timebase value changed {scope.timebase}')
+    print(f'Timebase value changed {scope.ani.event_source.interval}')
 
 def length_dial_handler(value, scope):
     scope.size = int(value)
@@ -247,7 +252,7 @@ def filter_dial_handler(cutoff, order, ftype):
         Generators.filters_zi = []
         Generators.active_iterations = 0
     if not ftype=='off':
-        sos = butter(order, cutoff/10*2/Global_data.fs, output = 'sos', btype=ftype)
+        sos = butter(order, cutoff*2/Global_data.fs, output = 'sos', btype=ftype)
         w, h = sosfreqz(sos)
         with Data.LOCK:
             Generators.filters.append(sos)
@@ -255,17 +260,19 @@ def filter_dial_handler(cutoff, order, ftype):
             Generators.filters_zi.append(sosfilt_zi(sos))
             Generators.active_iterations = 1
 
-        print(f'New {ftype} filter |cutoff: {cutoff/10} |order: {order}')
+        print(f'New {ftype} filter |cutoff: {cutoff} |order: {order}')
 
     else:
         print('Filter removed')
 
 def scale_dial_handler(value, scope):
-    scope.ylow = -1.1*value/10
-    scope.yhigh = 1.1*value/10
-
+    scope.ylow = -1.1*value
+    scope.yhigh = 1.1*value
+    #scope.ax.set_ylim(-1.1*value, 1.1*value)
 
 def signal_change_handler(sig, ind):
+    if Config.freq[ind]==0:
+        Config.freq[ind]==0.001
     with Data.LOCK:
         if sig=='sine':
             Generators.signals[ind] = SineOscillator(Config.freq[ind], amp=Config.amp[ind], sample_rate=Global_data.fs)
