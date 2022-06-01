@@ -12,4 +12,4 @@ venv/Scripts/Activate.ps1
 }
 
 cd src
-python main.py
+python main.py 
