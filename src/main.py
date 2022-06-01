@@ -14,7 +14,7 @@ from scipy.fft import rfftfreq, rfft
 from scipy.signal import butter, sosfilt, sosfilt_zi, sosfreqz
 from PyQt6 import QtCore, QtGui, QtWidgets
 import sys
-from SigGen import Ui_MainWindow
+from GUI.gui import Ui_MainWindow
 
 
 @dataclass
@@ -167,7 +167,7 @@ class Oscilloscope():
             return self.ln, self.lnf, fill, self.ln_pre, self.lnf_filt
         
         else:
-            return self.lnf, self.lnf_filt, fill
+            return self.lnf_filt,self.lnf,  fill
 
 
     def init_plotting(self):
@@ -246,6 +246,7 @@ def length_dial_handler(value, scope):
     print(f'Window length changed {scope.size}')
 
 def filter_dial_handler(cutoff, order, ftype):
+    cutoff = cutoff if cutoff > 1 else 1
     with Data.LOCK:
         Generators.filters = []
         Generators.filters_freqz = []

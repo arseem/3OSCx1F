@@ -1,0 +1,648 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>529</width>
+    <height>504</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QWidget" name="gridLayoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>251</width>
+      <height>161</height>
+     </rect>
+    </property>
+    <layout class="QGridLayout" name="gridLayout">
+     <item row="3" column="1">
+      <widget class="QLCDNumber" name="freq1lcd"/>
+     </item>
+     <item row="3" column="2">
+      <widget class="QLCDNumber" name="ph1lcd"/>
+     </item>
+     <item row="2" column="1" alignment="Qt::AlignBottom">
+      <widget class="QDial" name="freq1"/>
+     </item>
+     <item row="2" column="0" alignment="Qt::AlignBottom">
+      <widget class="QDial" name="amp1"/>
+     </item>
+     <item row="0" column="1">
+      <widget class="QComboBox" name="osc1">
+       <item>
+        <property name="text">
+         <string>OFF</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>SINE</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>TRIANGLE</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>SAW</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>SQUARE</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item row="1" column="2">
+      <widget class="QLabel" name="label_4">
+       <property name="text">
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot;font:9pt Proxy 9; font-weight:600;&quot;&gt;PHASE&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="2">
+      <widget class="QDial" name="ph1"/>
+     </item>
+     <item row="0" column="0">
+      <widget class="QLabel" name="label">
+       <property name="text">
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font:16pt Proxy 9; font-weight:600; font-style:italic;&quot;&gt;O S C 1&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QLabel" name="label_3">
+       <property name="text">
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font:10pt Proxy 9; font-weight:600;&quot;&gt;FREQUENCY&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="0">
+      <widget class="QLCDNumber" name="amp1lcd"/>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="label_2">
+       <property name="text">
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font:10pt Proxy 9; font-weight:600;&quot;&gt;AMPLITUDE&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QWidget" name="gridLayoutWidget_4">
+    <property name="geometry">
+     <rect>
+      <x>330</x>
+      <y>120</y>
+      <width>188</width>
+      <height>161</height>
+     </rect>
+    </property>
+    <layout class="QGridLayout" name="gridLayout_4">
+     <item row="1" column="0">
+      <widget class="QLabel" name="label_14">
+       <property name="text">
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font: 10pt Proxy 9;font-weight:600;&quot;&gt;CUTOFF&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QComboBox" name="filter1">
+       <item>
+        <property name="text">
+         <string>OFF</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>LOWPASS</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>HIGHPASS</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QLabel" name="label_15">
+       <property name="text">
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font:8pt Proxy 9; font-weight:600;&quot;&gt;ORDER&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="0">
+      <widget class="QLabel" name="label_13">
+       <property name="text">
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font:12pt Proxy 9; font-weight:600; font-style:italic;&quot;&gt;FILTER SECTION&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="0" alignment="Qt::AlignBottom">
+      <widget class="QDial" name="cutoff1"/>
+     </item>
+     <item row="2" column="1" alignment="Qt::AlignBottom">
+      <widget class="QDial" name="order1"/>
+     </item>
+     <item row="3" column="0">
+      <widget class="QLCDNumber" name="cut1lcd"/>
+     </item>
+     <item row="3" column="1">
+      <widget class="QLCDNumber" name="ord1lcd"/>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QWidget" name="gridLayoutWidget_5">
+    <property name="geometry">
+     <rect>
+      <x>260</x>
+      <y>330</y>
+      <width>251</width>
+      <height>131</height>
+     </rect>
+    </property>
+    <layout class="QGridLayout" name="gridLayout_5">
+     <item row="1" column="0" alignment="Qt::AlignBottom">
+      <widget class="QDial" name="timeb"/>
+     </item>
+     <item row="1" column="2">
+      <widget class="QDial" name="scale"/>
+     </item>
+     <item row="1" column="1" alignment="Qt::AlignBottom">
+      <widget class="QDial" name="wlen"/>
+     </item>
+     <item row="0" column="2">
+      <widget class="QLabel" name="label_19">
+       <property name="text">
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font:10pt Proxy 9; font-weight:600;&quot;&gt;SCALE&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QLabel" name="label_18">
+       <property name="text">
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font:10pt Proxy 9; font-weight:600;&quot;&gt;WINDOW&lt;br/&gt;LENGTH&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="2">
+      <widget class="QLCDNumber" name="sclcd"/>
+     </item>
+     <item row="2" column="1">
+      <widget class="QLCDNumber" name="wllcd"/>
+     </item>
+     <item row="2" column="0">
+      <widget class="QLCDNumber" name="tblcd"/>
+     </item>
+     <item row="0" column="0">
+      <widget class="QLabel" name="label_17">
+       <property name="text">
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font:10pt Proxy 9; font-weight:600;&quot;&gt;TIMEBASE&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QLabel" name="label_16">
+    <property name="geometry">
+     <rect>
+      <x>270</x>
+      <y>300</y>
+      <width>141</width>
+      <height>26</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font:16pt Proxy 9; font-weight:600; font-style:italic;&quot;&gt;OSCILLOSCOPE&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_20">
+    <property name="geometry">
+     <rect>
+      <x>290</x>
+      <y>10</y>
+      <width>191</width>
+      <height>91</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-family:'Proxy 9'; font-size:20pt; font-weight:600; font-style:italic;&quot;&gt;~~SIGNAL~~&lt;br/&gt;~GENERATOR~&lt;/span&gt;&lt;span style=&quot; font-family:'Proxy 9'; font-size:18pt; font-weight:600; font-style:italic;&quot;&gt;&lt;br/&gt;&lt;/span&gt;&lt;span style=&quot; font-family:'Proxy 9'; font-size:12pt; font-weight:600; font-style:italic;&quot;&gt;W A N N A B E&lt;br/&gt;3xOSCILLATOR&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+   </widget>
+   <widget class="QWidget" name="gridLayoutWidget_2">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>170</y>
+      <width>251</width>
+      <height>161</height>
+     </rect>
+    </property>
+    <layout class="QGridLayout" name="gridLayout_2">
+     <item row="3" column="1">
+      <widget class="QLCDNumber" name="freq2lcd"/>
+     </item>
+     <item row="3" column="2">
+      <widget class="QLCDNumber" name="ph2lcd"/>
+     </item>
+     <item row="2" column="1" alignment="Qt::AlignBottom">
+      <widget class="QDial" name="freq2"/>
+     </item>
+     <item row="2" column="0" alignment="Qt::AlignBottom">
+      <widget class="QDial" name="amp2"/>
+     </item>
+     <item row="0" column="1">
+      <widget class="QComboBox" name="osc2">
+       <item>
+        <property name="text">
+         <string>OFF</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>SINE</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>TRIANGLE</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>SAW</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>SQUARE</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item row="1" column="2">
+      <widget class="QLabel" name="label_5">
+       <property name="text">
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot;font:9pt Proxy 9; font-weight:600;&quot;&gt;PHASE&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="2">
+      <widget class="QDial" name="ph2"/>
+     </item>
+     <item row="0" column="0">
+      <widget class="QLabel" name="label_6">
+       <property name="text">
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:'Proxy 9'; font-size:16pt; font-weight:600; font-style:italic;&quot;&gt;O S C 2&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QLabel" name="label_7">
+       <property name="text">
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font:10pt Proxy 9; font-weight:600;&quot;&gt;FREQUENCY&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="0">
+      <widget class="QLCDNumber" name="amp3lcd"/>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="label_8">
+       <property name="text">
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font:10pt Proxy 9; font-weight:600;&quot;&gt;AMPLITUDE&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QWidget" name="gridLayoutWidget_3">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>340</y>
+      <width>251</width>
+      <height>161</height>
+     </rect>
+    </property>
+    <layout class="QGridLayout" name="gridLayout_3">
+     <item row="3" column="1">
+      <widget class="QLCDNumber" name="freq3lcd"/>
+     </item>
+     <item row="3" column="2">
+      <widget class="QLCDNumber" name="ph3lcd"/>
+     </item>
+     <item row="2" column="1" alignment="Qt::AlignBottom">
+      <widget class="QDial" name="freq3"/>
+     </item>
+     <item row="2" column="0" alignment="Qt::AlignBottom">
+      <widget class="QDial" name="amp3"/>
+     </item>
+     <item row="0" column="1">
+      <widget class="QComboBox" name="osc3">
+       <item>
+        <property name="text">
+         <string>OFF</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>SINE</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>TRIANGLE</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>SAW</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>SQUARE</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item row="1" column="2">
+      <widget class="QLabel" name="label_9">
+       <property name="text">
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot;font:9pt Proxy 9; font-weight:600;&quot;&gt;PHASE&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="2">
+      <widget class="QDial" name="ph3"/>
+     </item>
+     <item row="0" column="0">
+      <widget class="QLabel" name="label_10">
+       <property name="text">
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:'Proxy 9'; font-size:16pt; font-weight:600; font-style:italic;&quot;&gt;O S C 3&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QLabel" name="label_11">
+       <property name="text">
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font:10pt Proxy 9; font-weight:600;&quot;&gt;FREQUENCY&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="0">
+      <widget class="QLCDNumber" name="amp3lcd_2"/>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="label_12">
+       <property name="text">
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font:10pt Proxy 9; font-weight:600;&quot;&gt;AMPLITUDE&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>amp1</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>amp1lcd</receiver>
+   <slot>display(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>39</x>
+     <y>82</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>38</x>
+     <y>149</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>freq1</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>freq1lcd</receiver>
+   <slot>display(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>141</x>
+     <y>60</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>130</x>
+     <y>145</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>ph1</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>ph1lcd</receiver>
+   <slot>display(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>230</x>
+     <y>103</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>226</x>
+     <y>142</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>amp2</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>amp3lcd</receiver>
+   <slot>display(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>42</x>
+     <y>268</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>44</x>
+     <y>313</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>freq2</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>freq2lcd</receiver>
+   <slot>display(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>133</x>
+     <y>264</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>134</x>
+     <y>308</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>ph2</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>ph2lcd</receiver>
+   <slot>display(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>207</x>
+     <y>272</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>214</x>
+     <y>316</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>amp3</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>amp3lcd_2</receiver>
+   <slot>display(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>62</x>
+     <y>446</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>62</x>
+     <y>488</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>freq3</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>freq3lcd</receiver>
+   <slot>display(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>163</x>
+     <y>429</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>149</x>
+     <y>478</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>ph3</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>ph3lcd</receiver>
+   <slot>display(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>195</x>
+     <y>413</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>201</x>
+     <y>480</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>cutoff1</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>cut1lcd</receiver>
+   <slot>display(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>380</x>
+     <y>203</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>389</x>
+     <y>265</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>order1</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>ord1lcd</receiver>
+   <slot>display(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>473</x>
+     <y>210</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>489</x>
+     <y>269</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>timeb</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>tblcd</receiver>
+   <slot>display(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>278</x>
+     <y>388</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>293</x>
+     <y>446</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>wlen</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>wllcd</receiver>
+   <slot>display(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>404</x>
+     <y>391</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>392</x>
+     <y>441</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>scale</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>sclcd</receiver>
+   <slot>display(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>453</x>
+     <y>394</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>461</x>
+     <y>445</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

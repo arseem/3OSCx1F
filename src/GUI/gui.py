@@ -262,8 +262,8 @@ class Ui_MainWindow(object):
         self.ph3.valueChanged.connect(lambda: dial_handlers[6](self.ph3.value(), 2))
         #cutoff knob
         self.cutoff1.setMinimum(1)
-        self.cutoff1.setMaximum(scope.fs*10/2-0.1)
-        self.cutoff1.valueChanged.connect(lambda: dial_handlers[4](self.cutoff1.value(), self.order1.value(), self.filter1.currentText().lower()))
+        self.cutoff1.setMaximum(scope.fs*10/2-1)
+        self.cutoff1.valueChanged.connect(lambda: dial_handlers[4](self.cutoff1.value()/10, self.order1.value(), self.filter1.currentText().lower()))
         #order knob
         self.order1.setMinimum(1)
         self.order1.setMaximum(24)
