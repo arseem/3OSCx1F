@@ -36,7 +36,7 @@ I started this project as an attempt to create an app visualizing customizable d
     scipy==1.8.1 <br>
     six==1.16.0 <br>
   </ul>
-</details><br>
+</details>
 
 ## How to use
 - Make sure you have Python and venv library installed and added to PATH
@@ -51,7 +51,6 @@ I started this project as an attempt to create an app visualizing customizable d
 - Run main.py<br>
   > cd src<br>python main.py
 
-<br>
 
 ### Alternatively (without virtual environment)
 - Make sure to have installed all of the depandancies from requirements.txt<br>
