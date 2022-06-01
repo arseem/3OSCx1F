@@ -123,7 +123,6 @@ class Oscilloscope():
         if self.start==-1:
             self.start = perf_counter()
         with Data.LOCK:
-            #print('Reading Data')
             self.x = Data.X
             self.y = Data.Y
             self.y_pre = Data.Ytf
@@ -174,11 +173,6 @@ class Oscilloscope():
         #self.ani = FuncAnimation(self.fig, self._tick, interval=int(self.timebase*1000), blit=True)
         self.ani = FuncAnimation(self.fig, self._tick, interval=0, blit=True)
         self.fig.show()
-
-    def change_timebase(self):
-        pass
-        #self.ani.event_source.interval = int(Config.timebase*1000)
-        #self.fig.canvas.draw_idle()
 
 
 def generate_signal():
@@ -238,7 +232,6 @@ def phase_dial_handler(value, ind):
 def timebase_dial_handler(value, scope):
     Config.timebase = value
     scope.timebase = value
-    scope.change_timebase()
     print(f'Timebase value changed {scope.ani.event_source.interval}')
 
 def length_dial_handler(value, scope):
@@ -269,7 +262,6 @@ def filter_dial_handler(cutoff, order, ftype):
 def scale_dial_handler(value, scope):
     scope.ylow = -1.1*value
     scope.yhigh = 1.1*value
-    #scope.ax.set_ylim(-1.1*value, 1.1*value)
 
 def signal_change_handler(sig, ind):
     if Config.freq[ind]==0:

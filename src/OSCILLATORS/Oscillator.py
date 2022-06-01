@@ -15,7 +15,7 @@ class Oscillator(ABC):
         self._amp = amp
         self._phase = phase
 
-        self.__iter__()
+        self.__iter__() 
 
     @property
     def init_freq(self):

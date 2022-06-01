@@ -4,4 +4,3 @@ venv/
 bin/
 .vscode/
 SigGen.ui
-.gitignore
