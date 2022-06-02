@@ -44,7 +44,7 @@ I started this project as an attempt to create an app visualizing customizable d
 ### Windows
 - Run setup.ps1
 ### Other OS
-- Create virtual environment in the base folder of an application and activete it using<br>
+- Create virtual environment in the base folder of an application and activate it using<br>
   > pip -m venv venv<br>
   > venv/Scripts/Activate.ps1<br>
 - Make sure to have installed all of the depandancies from requirements.txt<br>
