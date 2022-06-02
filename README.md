@@ -2,7 +2,7 @@
 **3OSCx1F** is a 3-channel waveform generator with a filter (high/lowpass) and an oscilloscope visualising output waveform and spectrum in real time.<br>
 
 ## About the project
-I started this project as an attempt to create an app visualizing customizable data in real time. It's also a showcase of my self-written library for signal generation.
+I started this project as an attempt to create an app visualizing customizable data in real time. It's also a showcase of my self-written library for signal generation. Filters are implemented using scipy. PyQt6 is used for the front panel GUI, while live data plotting is handled solely by matplotlib. 
 
 ## Examples
 ### Signal summing
