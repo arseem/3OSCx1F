@@ -9,6 +9,7 @@ I started this project as an attempt to create an app visualizing customizable d
   - matplotlib
   - PyQt6
   - threading
+  - scipy
 ## Requirements
 
 <details>
