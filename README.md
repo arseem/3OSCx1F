@@ -4,10 +4,11 @@
 ## About the project
 I started this project as an attempt to create an app visualizing customizable data in real time. It's also a showcase of my self-written library for signal generation.
 
-## Signal summing example
+## Examples
+### Signal summing
 ![signal summing example gif](https://github.com/arseem/3OSCx1F/blob/master/example/Signal%20sum%20example.gif "Signal summing example")
 
-## Filtering example
+### Filtering
 ![filtering example gif](https://github.com/arseem/3OSCx1F/blob/master/example/Filters%20example.gif "Filtering example")
 
 ## Technologies in use
