@@ -4,6 +4,12 @@
 ## About the project
 I started this project as an attempt to create an app visualizing customizable data in real time. It's also a showcase of my self-written library for signal generation.
 
+## Signal summing example
+![signal summing example gif](https://github.com/arseem/3OSCx1F/blob/master/example/Signal%20summing%20example.gif "Signal summing example")
+
+## Filtering example
+![filtering example gif](https://github.com/arseem/3OSCx1F/blob/master/example/Filter%20example.gif "Filtering example")
+
 ## Technologies in use
 - Python
   - matplotlib
