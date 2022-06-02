@@ -352,7 +352,7 @@ class Ui_MainWindow(object):
         self.order1.setValue(12)
         self.ord1lcd.display(12)
         self.cutoff1.setValue(self.scope.fs/4)
-        self.cut1lcd.display(self.cutoff1.value()/100)
+        self.cut1lcd.display(self.cutoff1.value()/10)
         self.scale.setValue(10)
         self.sclcd.display(1)
 
