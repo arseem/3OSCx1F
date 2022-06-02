@@ -291,7 +291,7 @@ class Ui_MainWindow(object):
         self.amp3.valueChanged['int'].connect(lambda: self.amp3lcd_2.display(self.amp3.value()/10)) # type: ignore
         self.freq3.valueChanged['int'].connect(lambda: self.freq3lcd.display(self.freq3.value()/100)) # type: ignore
         self.ph3.valueChanged['int'].connect(self.ph3lcd.display) # type: ignore
-        self.cutoff1.valueChanged['int'].connect(lambda: self.cut1lcd.display(self.cutoff1.value()/100)) # type: ignore
+        self.cutoff1.valueChanged['int'].connect(lambda: self.cut1lcd.display(self.cutoff1.value()/10)) # type: ignore
         self.order1.valueChanged['int'].connect(self.ord1lcd.display) # type: ignore
         self.timeb.valueChanged['int'].connect(lambda: self.tblcd.display(self.timeb.value()/100)) # type: ignore
         self.wlen.valueChanged['int'].connect(self.wllcd.display) # type: ignore
@@ -351,7 +351,7 @@ class Ui_MainWindow(object):
         self.tblcd.display(self.timeb.value()/100)
         self.order1.setValue(12)
         self.ord1lcd.display(12)
-        self.cutoff1.setValue(self.scope.fs/4)
+        self.cutoff1.setValue(self.scope.fs/4*10)
         self.cut1lcd.display(self.cutoff1.value()/10)
         self.scale.setValue(10)
         self.sclcd.display(1)
