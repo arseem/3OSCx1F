@@ -1,14 +1,15 @@
-# **3OSCx1F**   //    Arbitrary Waveform Generator
-**3OSCx1F** is a 3-channel arbitrary waveform generator with a filter (high/lowpass) and an oscilloscope visualising output waveform and spectrum in real time.<br>
+# **3OSCx1F**   //    Waveform Generator with Oscilloscope
+**3OSCx1F** is a 3-channel waveform generator with a filter (high/lowpass) and an oscilloscope visualising output waveform and spectrum in real time.<br>
 
 ## About the project
-I started this project as an attempt to create an app visualizing customizable data in real time. It's also a showcase of my self-written library for arbitrary signal generation.
+I started this project as an attempt to create an app visualizing customizable data in real time. It's also a showcase of my self-written library for signal generation.
 
 ## Technologies in use
 - Python
   - matplotlib
   - PyQt6
   - threading
+  - scipy
 ## Requirements
 
 <details>
@@ -43,7 +44,7 @@ I started this project as an attempt to create an app visualizing customizable d
 ### Windows
 - Run setup.ps1
 ### Other OS
-- Create virtual environment in the base folder of an application and activete it using<br>
+- Create virtual environment in the base folder of an application and activate it using<br>
   > pip -m venv venv<br>
   > venv/Scripts/Activate.ps1<br>
 - Make sure to have installed all of the depandancies from requirements.txt<br>
