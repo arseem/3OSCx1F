@@ -226,7 +226,7 @@ class Ui_MainWindow(object):
         self.osc2.currentTextChanged.connect(lambda: dial_handlers[5](self.osc2.currentText().lower(), 1))
         self.osc3.currentTextChanged.connect(lambda: dial_handlers[5](self.osc3.currentText().lower(), 2))
         #filter choice
-        self.filter1.currentTextChanged.connect(lambda: dial_handlers[4](self.cutoff1.value(), self.order1.value(), self.filter1.currentText().lower()))
+        self.filter1.currentTextChanged.connect(lambda: dial_handlers[4](self.cutoff1.value()/10, self.order1.value(), self.filter1.currentText().lower()))
         #freq knobs
         fmin, fmax = 10, scope.fs*100/4
         self.freq1.setMinimum(fmin)

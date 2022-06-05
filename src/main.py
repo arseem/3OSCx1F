@@ -180,11 +180,15 @@ def generate_signal():
     while True:
         start = perf_counter()
 
+        y = Data.Y
+        ytf = Data.Ytf
+        ytf.append(sum([next(Generators.signals[i]) if Generators.signals[i] else 0 for i in range(len(Generators.signals))])/len(Generators.signals))
+        y = filter_signal(y, ytf)
         with Data.LOCK:
             Data.I+=1
-            Data.Ytf.append(sum([next(Generators.signals[i]) if Generators.signals[i] else 0 for i in range(len(Generators.signals))])/len(Generators.signals))
+            Data.Ytf = ytf
             Data.X.append(Data.I*1/Global_data.fs)
-            filter_signal()
+            Data.Y = y
 
         #sleep(1/fs)
         end = perf_counter()
@@ -195,20 +199,24 @@ def generate_signal():
         print(f'---{Data.I}\t:\tNEXT ITERATION---')
 
 
-def filter_signal():
+def filter_signal(y, ytf):
     delay = Global_data.fs//2*10
-    if len(Generators.filters) > 0:
+    with Data.LOCK:
+        safety_check = len(Generators.filters)
+    if safety_check > 0:
         if Generators.active_iterations < delay:
-            Data.Y = (list(sosfilt(Generators.filters[0], Data.Ytf, zi=Generators.filters_zi[0]*Data.Ytf[-Generators.active_iterations]))[0])
+            y = (list(sosfilt(Generators.filters[0], ytf, zi=Generators.filters_zi[0]*ytf[-Generators.active_iterations]))[0])
             Generators.active_iterations+=1
         else:
-            Data.Y[-delay:] = (list(sosfilt(Generators.filters[0], Data.Ytf[-delay:], zi=Generators.filters_zi[0]*Data.Ytf[-delay]))[0])
+            y[-delay:] = (list(sosfilt(Generators.filters[0], ytf[-delay:], zi=Generators.filters_zi[0]*ytf[-delay]))[0])
     
     else:
-        if len(Data.Ytf) <= delay:
-            Data.Y = Data.Ytf     
+        if len(ytf) <= delay:
+            y = ytf    
         else:
-            Data.Y[-delay:] = Data.Ytf[-delay:]        
+            y[-delay:] = ytf[-delay:]  
+
+    return y      
 
 
 def freq_dial_handler(value, ind):
@@ -240,23 +248,27 @@ def length_dial_handler(value, scope):
 
 def filter_dial_handler(cutoff, order, ftype):
     cutoff = cutoff if cutoff > 1 else 1
-    with Data.LOCK:
-        Generators.filters = []
-        Generators.filters_freqz = []
-        Generators.filters_zi = []
-        Generators.active_iterations = 0
     if not ftype=='off':
         sos = butter(order, cutoff*2/Global_data.fs, output = 'sos', btype=ftype)
         w, h = sosfreqz(sos)
         with Data.LOCK:
-            Generators.filters.append(sos)
+            Generators.filters = []
+            Generators.filters_freqz = []
+            Generators.filters_zi = []
+            Generators.active_iterations = 0
             Generators.filters_freqz.append((w, h))
             Generators.filters_zi.append(sosfilt_zi(sos))
             Generators.active_iterations = 1
+            Generators.filters.append(sos)
 
         print(f'New {ftype} filter |cutoff: {cutoff} |order: {order}')
 
     else:
+        with Data.LOCK:
+            Generators.filters = []
+            Generators.filters_freqz = []
+            Generators.filters_zi = []
+            Generators.active_iterations = 0
         print('Filter removed')
 
 def scale_dial_handler(value, scope):
@@ -265,7 +277,7 @@ def scale_dial_handler(value, scope):
 
 def signal_change_handler(sig, ind):
     if Config.freq[ind]==0:
-        Config.freq[ind]==0.001
+        Config.freq[ind]=0.001
     with Data.LOCK:
         if sig=='sine':
             Generators.signals[ind] = SineOscillator(Config.freq[ind], amp=Config.amp[ind], sample_rate=Global_data.fs)
